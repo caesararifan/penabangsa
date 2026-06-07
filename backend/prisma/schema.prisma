@@ -1,65 +1,7 @@
-// prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-}
-
-model User {
-  id              Int          @id @default(autoincrement())
-  name            String
-  email           String       @unique
-  password        String
-  role            String       @default("student")
-  expertise       String?
-  certificatePath String?
-  isVerified      Boolean      @default(false)
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-
-  courses         Course[]     
-  enrollments     Enrollment[] 
-}
-
-model Course {
-  id          Int          @id @default(autoincrement())
-  title       String
-  description String?
-  thumbnail   String?
-  status      String       @default("Published")
-  
-  authorId    Int
-  author      User         @relation(fields: [authorId], references: [id])
-
-  // --- KUNCI: Harus ada ini supaya bisa menghitung murid ---
-  enrollments Enrollment[] 
-  lessons Lesson[]
-
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-}
-
-model Enrollment {
-  id        Int      @id @default(autoincrement())
-  studentId Int
-  student   User     @relation(fields: [studentId], references: [id])
-  courseId  Int
-  course    Course   @relation(fields: [courseId], references: [id])
-  createdAt DateTime @default(now())
-
-  @@unique([studentId, courseId])
-}
-
-model Lesson {
-  id        Int      @id @default(autoincrement())
-  title     String
-  videoPath String   // Lokasi file video disimpan
-  
-  courseId  Int
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  
-  createdAt DateTime @default(now())
 }

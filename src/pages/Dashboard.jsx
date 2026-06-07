@@ -1,19 +1,22 @@
 import React from 'react';
 import DashboardLayout from '../components/DashboardLayout';
+import { useNavigate } from 'react-router-dom'; // 1. IMPORT USENAVIGATE
 
 import { 
   PlayCircle, Clock, CheckCircle2, ArrowRight, Book, Flame, Zap, 
-  Code, Database, Layers, Cpu 
+  Code, Database, Layers, Cpu,
+  BrainCircuit, Sparkles // 2. TAMBAHAN ICON UNTUK MBTI
 } from 'lucide-react';
 
 const Dashboard = () => {
+  const navigate = useNavigate(); // 3. INISIALISASI NAVIGATE
+
   const learningPath = [
     { title: "Pengenalan Go (Golang)", status: "Completed", desc: "Selesai pada 15 Mar" },
     { title: "Membangun REST API", status: "In Progress", desc: "Modul 4 dari 10" },
     { title: "Middleware & Auth JWT", status: "Upcoming", desc: "Materi terkunci" },
   ];
 
-  // Tambahkan icon dan gradient dekoratif agar lebih visual
   const materiTerbaru = [
     { title: 'Setup Environment Go', time: '12m', cat: 'Go Basics', icon: <Code size={20} />, color: 'text-emerald-600', bg: 'bg-emerald-50', topBorder: 'bg-emerald-400' },
     { title: 'Struktur Data & Interface', time: '25m', cat: 'Advanced Go', icon: <Cpu size={20} />, color: 'text-orange-600', bg: 'bg-orange-50', topBorder: 'bg-orange-400' },
@@ -25,7 +28,7 @@ const Dashboard = () => {
     <DashboardLayout>
       <div className="w-full space-y-8 md:space-y-10 animate-in fade-in duration-700 pb-10">
         
-        {/* STATS OVERVIEW: Tambahan icon raksasa transparan di background (Visual Cue) */}
+        {/* STATS OVERVIEW */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           <div className="relative overflow-hidden bg-white p-6 rounded-4xl border border-slate-100 flex items-center gap-5 shadow-sm hover:shadow-lg transition-all group">
             <Flame className="absolute -right-4 -bottom-4 w-28 h-28 text-orange-50 group-hover:scale-110 transition-transform duration-500" />
@@ -61,7 +64,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* HERO SECTION: Banner lebih dinamis */}
+        {/* HERO SECTION */}
         <section className="relative overflow-hidden bg-[#020617] rounded-3xl md:rounded-[40px] p-8 md:p-12 lg:p-14 text-white shadow-2xl shadow-blue-900/20">
           <div className="absolute top-0 right-0 w-125 h-125 bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
           
@@ -100,10 +103,10 @@ const Dashboard = () => {
           <Book className="absolute -right-5 -bottom-5 w-40 h-40 md:-right-10 md:-bottom-10 md:w-80 md:h-80 text-white/2 -rotate-12 pointer-events-none" />
         </section>
 
-        {/* GRID UTAMA: 12 Kolom Dinamis */}
+        {/* GRID UTAMA */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
           
-          {/* MATERI TERKINI (Kiri - 8 kolom) - Dibuat lebih visual dengan Top Border */}
+          {/* MATERI TERKINI (Kiri - 8 kolom) */}
           <div className="lg:col-span-8 space-y-6">
             <div className="flex items-center justify-between px-1">
               <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Materi Terkini</h3>
@@ -113,7 +116,6 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
               {materiTerbaru.map((materi, i) => (
                 <div key={i} className="relative bg-white rounded-3xl border border-slate-100 hover:border-slate-300 transition-all group cursor-pointer shadow-sm hover:shadow-xl hover:shadow-slate-200/50 flex flex-col justify-between overflow-hidden">
-                  {/* Visual Aksen Garis Atas */}
                   <div className={`absolute top-0 left-0 right-0 h-1.5 ${materi.topBorder} opacity-80 group-hover:opacity-100 transition-opacity`} />
                   
                   <div className="p-6">
@@ -140,37 +142,67 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* LEARNING PATH (Kanan - 4 kolom) - Visual Timeline Dipertegas */}
-          <div className="lg:col-span-4 space-y-6">
-            <h3 className="text-xl md:text-2xl font-black text-slate-900 px-1 tracking-tight">Alur Belajar</h3>
-            <div className="bg-white p-7 md:p-8 rounded-3xl md:rounded-[40px] border border-slate-100 shadow-sm relative overflow-hidden">
-              
-              <div className="space-y-8 relative z-10">
-                {/* Garis Vertikal (Timeline) */}
-                <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-slate-100 hidden md:block z-0"></div>
-                
-                {learningPath.map((path, i) => (
-                  <div key={i} className="relative flex gap-5 z-10 items-start group">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-4 border-white shadow-md shrink-0 relative z-10 transition-transform group-hover:scale-105 ${
-                      path.status === 'Completed' ? 'bg-emerald-500 text-white' : 
-                      path.status === 'In Progress' ? 'bg-blue-600 text-white shadow-blue-500/40 ring-4 ring-blue-50' : 'bg-slate-100 text-slate-400'
-                    }`}>
-                      <CheckCircle2 size={20} className={path.status === 'In Progress' ? 'animate-pulse' : ''} />
+          {/* LEARNING PATH & MBTI TEST (Kanan - 4 kolom) */}
+          <div className="lg:col-span-4 space-y-6 md:space-y-8">
+            
+            {/* ALUR BELAJAR */}
+            <div>
+              <h3 className="text-xl md:text-2xl font-black text-slate-900 px-1 tracking-tight mb-6">Alur Belajar</h3>
+              <div className="bg-white p-7 md:p-8 rounded-3xl md:rounded-[40px] border border-slate-100 shadow-sm relative overflow-hidden">
+                <div className="space-y-8 relative z-10">
+                  <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-slate-100 hidden md:block z-0"></div>
+                  
+                  {learningPath.map((path, i) => (
+                    <div key={i} className="relative flex gap-5 z-10 items-start group">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border-4 border-white shadow-md shrink-0 relative z-10 transition-transform group-hover:scale-105 ${
+                        path.status === 'Completed' ? 'bg-emerald-500 text-white' : 
+                        path.status === 'In Progress' ? 'bg-blue-600 text-white shadow-blue-500/40 ring-4 ring-blue-50' : 'bg-slate-100 text-slate-400'
+                      }`}>
+                        <CheckCircle2 size={20} className={path.status === 'In Progress' ? 'animate-pulse' : ''} />
+                      </div>
+                      <div className="pt-1.5 flex-1">
+                        <p className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1 ${
+                          path.status === 'Completed' ? 'text-emerald-500' :
+                          path.status === 'In Progress' ? 'text-blue-600' : 'text-slate-400'
+                        }`}>{path.status}</p>
+                        <h5 className="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1">{path.title}</h5>
+                        <p className="text-[11px] text-slate-500 font-medium">{path.desc}</p>
+                      </div>
                     </div>
-                    <div className="pt-1.5 flex-1">
-                      <p className={`text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1 ${
-                        path.status === 'Completed' ? 'text-emerald-500' :
-                        path.status === 'In Progress' ? 'text-blue-600' : 'text-slate-400'
-                      }`}>{path.status}</p>
-                      <h5 className="font-bold text-slate-900 text-sm md:text-base leading-tight mb-1">{path.title}</h5>
-                      <p className="text-[11px] text-slate-500 font-medium">{path.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
+            {/* 4. BANNER TES MBTI BARU DI SINI */}
+            <div 
+              onClick={() => navigate('/user/mbti')}
+              className="relative overflow-hidden bg-linear-to-br from-violet-600 to-indigo-700 p-8 rounded-3xl md:rounded-[40px] text-white shadow-xl shadow-indigo-600/20 cursor-pointer group hover:-translate-y-1 transition-all duration-300"
+            >
+              <Sparkles className="absolute top-4 right-4 w-24 h-24 text-white/10 group-hover:rotate-12 transition-transform duration-500" />
+              <BrainCircuit className="absolute -bottom-4 -left-4 w-32 h-32 text-indigo-800/40 group-hover:scale-110 transition-transform duration-700" />
+              
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md text-white rounded-full text-[10px] font-black uppercase tracking-widest mb-4">
+                  <BrainCircuit size={12} /> Fitur Baru
+                </div>
+                
+                <h3 className="text-2xl font-black mb-2 leading-tight">
+                  Kenali Potensi & <br /> Gaya Belajarmu!
+                </h3>
+                
+                <p className="text-indigo-100 text-sm mb-6 max-w-[250px] leading-relaxed">
+                  Ikuti tes kepribadian MBTI untuk mendapatkan rekomendasi materi dan karir yang paling cocok untukmu.
+                </p>
+                
+                <button className="bg-white text-indigo-700 px-6 py-3 rounded-xl font-bold text-sm hover:bg-indigo-50 transition-colors flex items-center gap-2 w-full justify-center group-hover:shadow-lg">
+                  Mulai Tes Sekarang
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </DashboardLayout>
