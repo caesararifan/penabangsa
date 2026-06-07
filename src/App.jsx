@@ -15,7 +15,7 @@ import MentorStudents from './pages/MentorStudents';
 import MentorAnalytics from './pages/MentorAnalytics';
 import MentorSettings from './pages/MentorSettings';
 import LandingMbti from './pages/Users/Mbti/LandingMbti';
-import MbtiTest from './pages/Users/Mbti/MbtiTest';
+import MbtiTest from './pages/users/Mbti/MbtiTest';
 import ResultMbti from './pages/Users/Mbti/ResultMbti';
 // IMPORT HALAMAN BARU (Nanti kita buat)
 import CourseDetail from './pages/CourseDetail'; 
