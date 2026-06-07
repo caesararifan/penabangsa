@@ -27,3 +27,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Server Pena Bangsa Running on Port ${PORT}`);
   console.log(`📁 Folder Statis: ${path.join(__dirname, 'uploads')}`);
 });
+
+app.get('/', (req, res) => {
+  res.send('API Pena Bangsa Backend is Running!');
+});
