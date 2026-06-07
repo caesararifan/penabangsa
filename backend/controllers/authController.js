@@ -1,15 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import pkg from '@prisma/client';
-const { PrismaClient } = pkg;
-import { Pool } from 'pg';
-import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from "@prisma/client";
 
-// Setup Prisma dengan PostgreSQL Adapter
-// eslint-disable-next-line no-undef
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient();
 
 // --- REGISTER CONTROLLER ---
 export const register = async (req, res) => {
